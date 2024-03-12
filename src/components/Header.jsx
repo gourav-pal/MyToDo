@@ -13,22 +13,19 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from "@emotion/react";
 
-
-const theme=createTheme({
-  palette:{
-    primary:{
+const theme = createTheme({
+  palette: {
+    primary: {
       main: '#87103f',
     },
-    secondary:{
-      main:'#ffea00',
+    secondary: {
+      main: '#ffea00',
     },
   },
 });
-
 
 const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
@@ -42,7 +39,7 @@ function Header(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center",  }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         MUI
       </Typography>
@@ -56,6 +53,10 @@ function Header(props) {
           </ListItem>
         ))}
       </List>
+      {/* Including the "My To Do List✔️" text here */}
+      <Typography variant="h6" sx={{ my: 2 }}>
+        My To Do List✔️
+      </Typography>
     </Box>
   );
 
@@ -64,46 +65,53 @@ function Header(props) {
 
   return (
     <ThemeProvider theme={theme}>
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar component="nav" color="primary">
-        <Toolbar>
-          
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block", textAlign:'center'},fontWeight:200}}
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar component="nav" color="primary">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, textAlign: 'center' }}
+            >
+              My To Do List✔️
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <nav>
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: "block", sm: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
+            }}
           >
-            My To Do List✔️
-          </Typography>
-          
-        </Toolbar>
-      </AppBar>
-      <nav>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-        <Typography></Typography>
+            {drawer}
+          </Drawer>
+        </nav>
+        <Box component="main" sx={{ p: 3 }}>
+          <Toolbar />
+          <Typography></Typography>
+        </Box>
       </Box>
-    </Box>
     </ThemeProvider>
   );
 }
